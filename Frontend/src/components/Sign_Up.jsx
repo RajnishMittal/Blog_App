@@ -1,15 +1,17 @@
 import React from 'react'
 import "../css/style.css"
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 function Sign_Up() {
 
     const navigate = useNavigate()
+    const [error, setError] = React.useState("")
 
     async function SignUp_data(e){
         e.preventDefault()
         const formdata = new FormData(e.target)
         const data = Object.fromEntries(formdata)
+        setError("")
 
         try{
             const res = await fetch("http://localhost:5000/api/users", {
@@ -19,12 +21,19 @@ function Sign_Up() {
                 },
                 body: JSON.stringify(data)
             })
-            if (res.ok) {
-                navigate("/login");
+
+            const result = await res.json()
+
+            if (!res.ok) {
+                setError(result.error || "Signup failed")
+                return
             }
+
+            navigate("/login")
         }
         catch(err){
             console.log(err)
+            setError("Signup failed")
         }
     }
 
@@ -40,7 +49,8 @@ function Sign_Up() {
                         <input type="email" name='email' placeholder='xyz@abc.com' required />
                         <label htmlFor="pass">Password</label>
                         <input type="password" name='pass' required />
-                        <a href="/login">Already have an account?</a>
+                        {error ? <p style={{ color: 'red' }}>{error}</p> : null}
+                        <Link to="/login">Already have an account?</Link>
                         <button type='submit'>SUBMIT</button>
                     </div>
                 </form>

@@ -4,15 +4,25 @@ const { setUser } = require("../services/auth")
 async function signUpUser(req, res) {
     const body = req.body
     console.log(body)
-    if (!body) return res.json({ error: "no data" })
-    const result = await userModel.create({
-        name: body.name,
-        email: body.email,
-        pass: body.pass
-    })
-    return res.status(201).json({
-        message: "User created successfully"
-    });
+    if (!body) return res.status(400).json({ error: "no data" })
+
+    try {
+        await userModel.create({
+            name: body.name,
+            email: body.email,
+            pass: body.pass
+        })
+
+        return res.status(201).json({
+            message: "User created successfully"
+        })
+    } catch (err) {
+        console.error(err)
+        if (err.code === 11000) {
+            return res.status(409).json({ error: "Email already exists" })
+        }
+        return res.status(500).json({ error: "Something went wrong" })
+    }
 }
 
 async function logInUser(req, res) {

@@ -1,7 +1,6 @@
 import React from 'react'
 import "../css/style.css"
-import { useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
 
 function Sign_In() {
 
@@ -44,7 +43,7 @@ function Sign_In() {
                         <input type="email" name='email' placeholder='xyz@abc.com' required />
                         <label htmlFor="pass">Password</label>
                         <input type="password" name='pass' required />
-                        <a href="/">Don't have an account?</a>
+                        <Link to="/">Don't have an account?</Link>
                         <button type='submit' >SUBMIT</button>
                     </div>
                 </form>

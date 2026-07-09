@@ -24,7 +24,7 @@ function App() {
         })
             .then(res => {
                 if (res.status === 401) {
-                    navigate("/login")
+                    navigate("/")
                     return null
                 }
                 if (!res.ok) throw new Error("Failed to fetch blogs")

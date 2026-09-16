@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import "../css/style.css"
 
 function Create_Blog({ blogs, setAllBlogs }) {
 
@@ -17,19 +18,21 @@ function Create_Blog({ blogs, setAllBlogs }) {
                 body: JSON.stringify(data),
                 credentials: "include"
             })
-            const newBlog = await res.json()
-            setAllBlogs(prev => [...prev, newBlog])
-            if (res.ok) {
-                navigate("/home")
-            }
+
             if (res.status === 401) {
                 navigate("/login")
+                return
             }
-            if (res.status === 500) {
-                const text = await res.text()
-                console.error("Server error:", res.status, text)
-                throw new Error(`Request failed with status ${res.status}`)
+
+            const result = await res.json()
+
+            if (!res.ok) {
+                console.error("Failed to create blog:", result.message || result.error)
+                return
             }
+
+            setAllBlogs(prev => [...prev, result.blog])
+            navigate("/home")
         } catch (err) {
             console.error("Failed to create blog:", err)
         }

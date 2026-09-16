@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
+import "../css/style.css"
 
 function EditBlog({ userBlog, setUserBlog }) {
     const { id } = useParams()
@@ -57,7 +57,7 @@ function EditBlog({ userBlog, setUserBlog }) {
         }
     }
 
-    if (!blog) return <p>Blog not found.</p>
+    if (!blog) return <p style={{ textAlign: 'center', padding: '60px', color: '#64748b' }}>Blog not found.</p>
 
     return (
         <div className="edit_page">
@@ -101,6 +101,7 @@ function EditBlog({ userBlog, setUserBlog }) {
 
                     <div className="edit_actions">
                         <button type="submit" className="edit_save_btn">Update Blog</button>
+                        <button type="button" className="edit_cancel_btn" onClick={() => navigate(-1)}>Cancel</button>
                     </div>
                 </form>
             </div>

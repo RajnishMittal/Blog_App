@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import "../css/style.css"
 
 function MainPage({ blogs, user, setUser }) {
     
@@ -10,7 +11,7 @@ function MainPage({ blogs, user, setUser }) {
         })
             .then(res => res.json())
             .then(data => setUser(data.user))
-            .catch(err => console.error("Failed to fetch blogs:", err))
+            .catch(err => console.error("Failed to fetch user:", err))
     }, [])
 
     async function handlelogout(e){
@@ -28,7 +29,7 @@ function MainPage({ blogs, user, setUser }) {
                 return
             }
 
-            const result = await res.json()
+            await res.json()
             navigate("/login")
         }
         catch(err){
@@ -42,16 +43,21 @@ function MainPage({ blogs, user, setUser }) {
                 <div className="nav_bar">
                     <div className="logo">
                         <img src="https://picsum.photos/id/40/400/250" alt="" />
-                        <h1>blog</h1>
+                        <h1>Blog<span>Space</span></h1>
                     </div>
                     <div className="functions">
-                        <button onClick={() => navigate("/create")} >Create</button>
-                        <button disabled={!user?._id} onClick={() => navigate(`/edit/${user?._id}`)} >Edit</button>
-                        <button onClick={handlelogout} >Logout</button>
-                        <img src="https://picsum.photos/id/40/400/250" alt="" />
+                        <button className="btn-primary" onClick={() => navigate("/create")} >+ Create</button>
+                        <button disabled={!user?._id} onClick={() => navigate(`/edit/${user?._id}`)} >My Blogs</button>
+                        <button className="btn-danger" onClick={handlelogout} >Logout</button>
                     </div>
                 </div>
             </nav>
+            {user && (
+                <div className="welcome_text">
+                    <h2>Welcome back, <span>{user.name}</span> 👋</h2>
+                    <p>Discover the latest stories from our community</p>
+                </div>
+            )}
             <div className="blog_list">
                 {blogs.map(blog => (
                     <div

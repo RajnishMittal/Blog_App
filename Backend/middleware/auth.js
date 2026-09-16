@@ -1,7 +1,6 @@
 const { getUser } = require("../services/auth")
 
 function restrictToLoggedIn(req, res, next) {
-    console.log(req)
     const token = req.cookies.uid
     if (!token) {
         res.setHeader("Cache-Control", "no-store")

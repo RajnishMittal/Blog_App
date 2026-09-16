@@ -1,8 +1,10 @@
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import "../css/style.css"
 
 function Blog({ user }) {
     const { id } = useParams()
+    const navigate = useNavigate()
     const [blog, setBlog] = useState(null)
     const [comments, setComments] = useState([])
 
@@ -28,7 +30,7 @@ function Blog({ user }) {
         fetchComments()
     }, [id])
 
-    if (!blog) return <p>Loading...</p>
+    if (!blog) return <p style={{ textAlign: 'center', padding: '60px', color: '#64748b' }}>Loading...</p>
 
     const addComment = async (e) => {
         e.preventDefault()
@@ -59,9 +61,12 @@ function Blog({ user }) {
 
     return (
         <div className='blog_page'>
+            <div className='blog_back_btn'>
+                <button onClick={() => navigate("/home")}>← Back to Home</button>
+            </div>
             <div className='blog_content'>
                 <h1>{blog.title}</h1>
-                <p>By: {blog.createdBy?.name || "Unknown"}</p>
+                <p className="blog_author">By <span>{blog.createdBy?.name || "Unknown"}</span></p>
                 <img src={blog.image} alt={blog.title} />
                 <p>{blog.description}</p>
                 <p className="blog_text">{blog.textContent}</p>
@@ -74,9 +79,10 @@ function Blog({ user }) {
                 </form>
                 <div className="comments">
                     {comments.map(comment => {
-                        // works whether createdBy is populated (object) or a raw ObjectId string
-                        const commenterId = comment.createdBy
-                        const isOwn = commenterId === user?._id
+                        const commenterId = typeof comment.createdBy === 'object'
+                            ? comment.createdBy?._id
+                            : comment.createdBy
+                        const isOwn = String(commenterId) === String(user?._id)
 
                         return (
                             <div

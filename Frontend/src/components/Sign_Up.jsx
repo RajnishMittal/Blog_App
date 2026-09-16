@@ -40,18 +40,18 @@ function Sign_Up() {
     return (
         <div className='body'>
             <div className='container' >
-                <h1>Sign Up</h1>
+                <h1>Create Account</h1>
                 <form action="" onSubmit={SignUp_data} >
                     <div className="SignUp">
-                        <label htmlFor="name">Name</label>
-                        <input type="text" name='name' required />
-                        <label htmlFor="email">Email</label>
-                        <input type="email" name='email' placeholder='xyz@abc.com' required />
+                        <label htmlFor="name">Full Name</label>
+                        <input type="text" name='name' placeholder='John Doe' required />
+                        <label htmlFor="email">Email Address</label>
+                        <input type="email" name='email' placeholder='you@example.com' required />
                         <label htmlFor="pass">Password</label>
-                        <input type="password" name='pass' required />
-                        {error ? <p style={{ color: 'red' }}>{error}</p> : null}
-                        <Link to="/login">Already have an account?</Link>
-                        <button type='submit'>SUBMIT</button>
+                        <input type="password" name='pass' placeholder='••••••••' required />
+                        {error ? <p style={{ color: '#ef4444', fontSize: '0.88rem', textAlign: 'center' }}>{error}</p> : null}
+                        <Link to="/login">Already have an account? Sign in</Link>
+                        <button type='submit'>CREATE ACCOUNT</button>
                     </div>
                 </form>
             </div>

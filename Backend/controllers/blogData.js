@@ -20,7 +20,7 @@ async function getById(req, res) {
     }
 
     try {
-        const result = await blogModel.findOne({ _id: id })
+        const result = await blogModel.findOne({ _id: id }).populate('createdBy', 'name')
 
         if (!result) {
             return res.status(404).json({ message: "Blog not found" })
@@ -96,7 +96,7 @@ async function getComments(req, res) {
     }
 
     try {
-        const comments = await chatModel.find({ commentOn: id })
+        const comments = await chatModel.find({ commentOn: id }).populate('createdBy', 'name')
         return res.status(200).json(comments)
     }
     catch (err) {

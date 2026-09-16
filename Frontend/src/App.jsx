@@ -1,6 +1,5 @@
 import './App.css'
 import React from 'react';
-import blogPosts from "./dummy.js";
 import Sign_Up from './components/Sign_Up'
 import Sign_In from './components/Sign_In'
 import MainPage from './components/MainPage';
@@ -15,7 +14,7 @@ function App() {
 
   const[blogs, setAllBlogs] = React.useState([])
   const[userBlog, setUserBlog] = React.useState([])
-  const[user, setUser] = React.useState([])
+  const[user, setUser] = React.useState(null)
   const navigate = useNavigate()
 
     React.useEffect(() => {
@@ -35,8 +34,6 @@ function App() {
             })
             .catch(err => console.error("Failed to fetch blogs:", err))
     }, [])
-
-    console.log(user)
 
   return (
     <Routes>

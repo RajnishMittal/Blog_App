@@ -4,7 +4,6 @@ import "../css/style.css"
 
 function Edit_Blog({ setUserBlog, userBlog }) {
     const { id } = useParams()
-    console.log(id)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -13,7 +12,6 @@ function Edit_Blog({ setUserBlog, userBlog }) {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 setUserBlog(data.allBlogs)
             })
             .catch(err => console.error(err))
@@ -42,10 +40,14 @@ function Edit_Blog({ setUserBlog, userBlog }) {
     }
 
     return (
-        <div>
+        <div className="edit_page_wrapper">
+            <div className="edit_page_header">
+                <h1>My Blogs</h1>
+                <button onClick={() => navigate("/home")}>← Back to Home</button>
+            </div>
             <div className="blog_list">
                 {!userBlog || userBlog.length === 0 ? (
-                    <h1 className='no_blogs' >No blogs currently</h1>
+                    <h1 className='no_blogs' >No blogs yet — start writing!</h1>
                 ) : (
                     userBlog.map(blog => (
                         <div className="blog_edit_item" key={blog._id}>
